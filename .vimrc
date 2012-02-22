@@ -20,6 +20,7 @@ Bundle 'syntaxGemfile.vim'
 Bundle 'wgibbs/vim-irblack'
 Bundle 'rosenfeld/conque-term'
 Bundle 'FuzzyFinder'
+Bundle 'Command-T'
 Bundle 'vim-coffee-script'
 Bundle 'tpope/vim-fugitive'
 Bundle 'simplenote.vim'
@@ -35,6 +36,9 @@ Bundle 'Shougo/vimshell'
 Bundle 'Shougo/vimproc'
 Bundle 'MatlabFilesEdition'
 Bundle 'rollxx/vim-antlr'
+Bundle 'croaker/mustang-vim'
+Bundle 'Raimondi/delimitMate'
+Bundle 'vcscommand.vim'
 
 if !windows
   set shellcmdflag=-lc
@@ -48,6 +52,7 @@ set backspace=indent,eol,start
 
 set nobackup
 set history=50		" keep 50 lines of command line history
+set undolevels=1000 "keep a large number of undos"
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
@@ -102,6 +107,7 @@ endif
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
+  nmap <silent> <C-N> :silent noh<CR>
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -165,14 +171,18 @@ function TextMode()
   setlocal foldcolumn=5
 endfu
 
-
 " FuzzyFinder
 let g:fuf_modesDisable = [] " needed to enable FufMruFile
-nmap <Leader>o :FufFile<CR>
-nmap <Leader>l :FufFileWithCurrentBufferDir<CR>
-nmap <Leader>b :FufBuffer<CR>
-nmap <Leader>d :FufDir<CR>
-nmap <Leader>h :FufMruFile<CR>
+nmap <Leader>o :CommandT<CR>
+"nmap <Leader>l cd %:h; :CommandT<CR>
+nmap <Leader>b :CommandTBuffer<CR>
+nmap <Leader>h :CommandTHistory<CR>
+nmap <Leader>l :CommandTJump<CR>
+
+"Command-T
+set wildignore+="*.o, *.obj, .git, .svn"
+let g:CommandTMatchWindowReverse = 1
+let g:CommandTMaxHeight = 10
 
 " Quickly edit vimrc
 if windows
@@ -205,6 +215,7 @@ nmap <Leader>sd :Simplenote -d<CR>
 nmap <Leader>sD :Simplenote -D<CR>
 nmap <Leader>st :Simplenote -t<CR>
 
+
 "Ctrl + Space autocomplete
 inoremap <C-Space> <C-n>
 imap <C-@> <C-Space>
@@ -236,7 +247,7 @@ if has("gui_running")
     set guifont=Ubuntu\ Mono\ 12
   endif
 
-  colorscheme ir_black
+  colorscheme mustang
 
 " Console settings
 else
