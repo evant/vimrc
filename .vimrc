@@ -39,6 +39,7 @@ Bundle 'rollxx/vim-antlr'
 Bundle 'croaker/mustang-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'vcscommand.vim'
+Bundle 'mru.vim'
 
 if !windows
   set shellcmdflag=-lc
@@ -160,7 +161,6 @@ endif
 function TextMode()
   setlocal nonumber "Remove line numbers
   setlocal formatoptions+=n "Ensure numbered list format correctly
-  setlocal noexpandtab "Don't expand tabs to spaces
   "cursor doesn't skip wraped lines
   map <buffer> j gj
   map <buffer> k gk
@@ -171,19 +171,16 @@ function TextMode()
   setlocal foldcolumn=5
 endfu
 
-" FuzzyFinder
-let g:fuf_modesDisable = [] " needed to enable FufMruFile
-nmap <Leader>o :CommandT<CR>
-"nmap <Leader>l cd %:h; :CommandT<CR>
-nmap <Leader>b :CommandTBuffer<CR>
-nmap <Leader>h :CommandTHistory<CR>
-nmap <Leader>l :CommandTJump<CR>
 
 "Command-T
 set wildignore+="*.o, *.obj, .git, .svn"
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 10
 
+nmap <Leader>o :CommandT<CR>
+nmap <Leader>b :CommandTBuffer<CR>
+nmap <Leader>h :CommandTHistory<CR>
+nmap <Leader>l :CommandT %:h<CR>
 " Quickly edit vimrc
 if windows
   nmap <Leader>e :e $HOME/_vimrc <CR>
@@ -334,3 +331,7 @@ map <Leader>r <Plug>RubyTestRunLast
 
 "Vimshell
 let g:vimshell_prompt = "~:"
+
+"Open quickfix when make is run
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
