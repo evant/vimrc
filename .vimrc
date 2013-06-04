@@ -1,6 +1,5 @@
 " Detect if running on windows
-let windows = has("win32") || has("win16")
-
+let windows = has("win32") || has("win16") 
 " Vundle
 set nocompatible
 filetype off
@@ -18,21 +17,17 @@ Bundle 'SingleCompile'
 Bundle 'L9'
 Bundle 'syntaxGemfile.vim'
 Bundle 'wgibbs/vim-irblack'
-Bundle 'rosenfeld/conque-term'
-Bundle 'FuzzyFinder'
-Bundle 'Command-T'
-Bundle 'vim-coffee-script'
+"Bundle 'FuzzyFinder'
+"Bundle 'Command-T'
+Bundle 'DawidJanczak/vim-coffee-script'
 Bundle 'tpope/vim-fugitive'
-Bundle 'simplenote.vim'
 Bundle 'haskell.vim'
 Bundle 'multvals.vim'
 Bundle 'tComment'
 Bundle 'ack.vim'
-Bundle 'mineiro/vim-latex'
 Bundle 'Rubytest.vim'
 Bundle 'asmx86_64'
 Bundle 'lunaru/vim-less'
-Bundle 'Shougo/vimshell'
 Bundle 'Shougo/vimproc'
 Bundle 'MatlabFilesEdition'
 Bundle 'rollxx/vim-antlr'
@@ -40,6 +35,30 @@ Bundle 'croaker/mustang-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'vcscommand.vim'
 Bundle 'mru.vim'
+Bundle 'wlangstroth/vim-racket'
+Bundle 'adimit/prolog.vim'
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'pbrisbin/html-template-syntax'
+Bundle 'chriskempson/vim-tomorrow-theme'
+Bundle 'repeat.vim'
+Bundle 'tpope/vim-ragtag'
+Bundle 'tpope/vim-foreplay'
+Bundle 'tpope/vim-surround'
+"Bundle 'VimClojure'
+Bundle 'guns/vim-clojure-static'
+Bundle 'rainbow_parentheses.vim'
+Bundle 'scrooloose/syntastic'
+Bundle 'neocomplcache'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'Tabular'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'LaTeX-Box'
+Bundle 'netrw.vim'
+Bundle 'kongo2002/fsharp-vim'
+Bundle 'notes.vim'
+Bundle 'ctrlp.vim'
+Bundle 'wting/rust.vim'
+Bundle 'glsl.vim'
 
 if !windows
   set shellcmdflag=-lc
@@ -79,6 +98,8 @@ set expandtab " insert spaces instead of tabs
 set hidden " don't require save when switching buffers
 set spelllang=en_us
 set autoread " don't prompt when file's contents have changed
+set noswapfile " don't create swp files
+set colorcolumn=80 " show 80 chars
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -121,24 +142,33 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
+  " Latex files:
+  autocmd FileType tex call LatexMode()
+
   " Text files:
   autocmd BufRead,BufNewFile README,*.txt setf text
   autocmd FileType text call TextMode()
-  autocmd FileType txt call TextMode()
-  autocmd FileType latex call TextMode()
-  autocmd FileType markdown call TextMode()
+  autocmd FileType mdk call TextMode()
 
   " Code files:
   " Set tab to 4 spaces for java and c
   autocmd FileType java setlocal ts=4 sts=4 sw=4
   autocmd FileType c setlocal ts=4 sts=4 sw=4
+  " Set tab to 8 spaces for Haskell
+  autocmd FileType haskell setlocal ts=4 sts=4 sw=4
+
+  " Java files:
+  autocmd FileType java setlocal tw=120 cc=120
 
   "Run tests
-  autocmd FileType ruby map <buffer> <F4> :!rspec '%'<cr>
+  "autocmd FileType ruby map <buffer> <F4> :!rspec '%'<cr>
 
   "Detect syntax
   autocmd Filetype asm setlocal syntax=asmx86_64
   autocmd BufRead,BufNewFile *.g setlocal filetype=antlr syntax=antlr3
+
+  "clojure
+  "autocmd FileType clojure RainbowParenthesesToggle
 
   " When editing a file, always jump to the last known cursor position.  Don't
   " do it when the position is invalid or when inside an event handler (happens
@@ -149,13 +179,21 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
-  augroup END
+augroup END
 
 else
-
   set autoindent		" Always set autoindenting on
-
 endif
+
+"Rubytest
+let g:rubytest_in_quickfix = 1
+"remove conflict with <Leader>l
+map <Leader>rt <Plug>RubyTestRunLast
+
+"ragtag
+inoremap <M-o>       <Esc>o
+inoremap <C-j>       <Down>
+let g:ragtag_global_maps = 1
 
 "Mode for editing plaintext
 function TextMode()
@@ -169,49 +207,44 @@ function TextMode()
   "Set a left margin
   highlight! link FoldColumn Normal
   setlocal foldcolumn=5
+set colorcolumn=0 " don't show 80 column
 endfu
 
+"Mode for editing Latex
+function LatexMode()
+  call TextMode()
+
+  nmap <buffer> <Leader>ll :Latexmk<CR>
+  nmap <buffer> <Leader>lv :LatexView<CR>
+  nmap <buffer> <Leader>t yawi\begin{ea}o\end{pVk=o
+endfu
 
 "Command-T
 set wildignore+="*.o, *.obj, .git, .svn"
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTMaxHeight = 10
+                                                     
+"nmap <Leader>o :CommandT<CR>
+"nmap <Leader>b :CommandTBuffer<CR>
+"nmap <Leader>h :CommandTHistory<CR>
+"nmap <Leader>l :CommandT %:h<CR>
+"nmap <Leader>f :CommandTFlush<CR>
 
-nmap <Leader>o :CommandT<CR>
-nmap <Leader>b :CommandTBuffer<CR>
-nmap <Leader>h :CommandTHistory<CR>
-nmap <Leader>l :CommandT %:h<CR>
+"CtrlP
+"let g:ctrlp_user_command = 'find %s -type f -maxdepth 4'
+let g:ctrlp_clear_cache_on_exit = 0
+
+nmap <Leader>o :CtrlP<CR>
+nmap <Leader>b :CtrlPBuffer<CR>
+nmap <Leader>h :CtrlPMRU<CR>
+nmap <Leader>r :CtrlPClearCache<CR>
+
 " Quickly edit vimrc
 if windows
   nmap <Leader>e :e $HOME/_vimrc <CR>
 else
   nmap <Leader>e :e ~/.vimrc <CR>
 endif
-
-"ConqueTerm
-if windows
-  nmap <Leader>cc :ConqueTermSplit cmd<CR>
-else
-  nmap <Leader>cc :ConqueTermSplit bash<CR>
-  nmap <Leader>CC :ConqueTermVSplit bash<CR>
-  nmap <Leader>cm :ConqueTermSplit matlab -nodesktop -nosplash<CR>
-  nmap <Leader>CM :ConqueTermVSplit matlab -nodesktop -nosplash<CR>
-endif
-
-"SimpleNote
-if windows
-  source $HOME/vimfiles/simplenote
-else
-  source ~/.vim/simplenote
-endif
-
-nmap <Leader>sl :Simplenote -l<CR>
-nmap <Leader>sn :Simplenote -n<CR>
-nmap <Leader>su :Simplenote -u<CR>
-nmap <Leader>sd :Simplenote -d<CR>
-nmap <Leader>sD :Simplenote -D<CR>
-nmap <Leader>st :Simplenote -t<CR>
-
 
 "Ctrl + Space autocomplete
 inoremap <C-Space> <C-n>
@@ -228,23 +261,19 @@ try
 catch
 endtry
 
+"Set font
+if windows
+  set guifont=Segoe_UI_Mono:h11:cANSI
+else
+  set guifont=Ubuntu\ Mono\ 13
+endif
+
 " Gui settings
 if has("gui_running")
-  " Remove scrollbars and tool bar
-  set guioptions-=T
-  set guioptions-=r
-  set guioptions-=l
-  set number " Enable line numbers
-  set lines=40 columns=120 " Set default size
-
-  "Set font
-  if windows
-    set guifont=Segoe_UI_Mono:h11:cANSI
-  else
-    set guifont=Ubuntu\ Mono\ 12
-  endif
-
-  colorscheme mustang
+  " Remove all gui stuff
+  set guioptions=
+  set winaltkeys=no
+  " set lines=40 columns=120 " Set default size
 
 " Console settings
 else
@@ -252,12 +281,15 @@ else
   set background=dark
 endif
 
+set number " Enable line numbers
+
+if has("gui_running") || $TERM == "xterm-256color"
+  set t_Co=256
+  color Tomorrow-Night
+endif
+
 " Ctrl-D in insert mode inserts current date
 inoremap <C-d> <C-R>=strftime("%d %b %Y")<CR>
-
-"Surround
-map <Leader>s <Plug>Vsurround
-map <Leader>S <Plug>Vsurround
 
 " Run current program
 nmap <F5> :SCCompileRun<cr> 
@@ -271,10 +303,10 @@ if !windows
 endif
    
 "Easier moving in tabs and windows
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
-map <C-H> <C-W>h
+map <M-J> <C-W><C-J>
+map <M-K> <C-W><C-K>
+map <M-L> <C-W><C-L>
+map <M-H> <C-W><C-H>
 
 "SingleCompile
 let g:SingleCompile_showquickfixiferror = 1
@@ -311,11 +343,8 @@ let g:tex_flavor='latex'
 if windows
   set shellslash
 else
-  let g:Tex_ViewRule_dvi = 'evince'
-  let g:Tex_ViewRule_ps = 'evince'
-  let g:Tex_ViewRule_pdf = 'evince'
-
-  let g:Tex_DefaultTargetFormat = 'pdf'
+  let g:LatexBox_viewer="evince"
+  let g:LatexBox_latexmk_options = "--shell-escape"
 endif
 
 "Adjust quckfix window to size of contents
@@ -324,14 +353,17 @@ function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
-"Rubytest
-let g:rubytest_in_quickfix = 1
-"remove conflict with <Leader>l
-map <Leader>r <Plug>RubyTestRunLast
-
-"Vimshell
-let g:vimshell_prompt = "~:"
-
 "Open quickfix when make is run
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
+
+" NeoCompl
+let g:neocomplcache_enable_at_startup = 1
+
+" fix meta-keys which generate <Esc>a .. <Esc>z
+"let c='a'
+"while c <= 'z'
+"  exec "set <M-".toupper(c).">=\e".c
+"  exec "imap \e".c." <M-".toupper(c).">"
+"  let c = nr2char(1+char2nr(c))
+"endw
