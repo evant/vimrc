@@ -2,7 +2,7 @@
 let windows = has("win32") || has("win16") 
 
 " load vundle
-source ~/vimrc/bundles.vim
+source ~/.vim/bundles.vim
 
 if !windows
   set shellcmdflag=-lc
@@ -20,6 +20,7 @@ set undolevels=1000 "keep a large number of undos"
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+set noesckeys " disable because it cause a deley when doing Esc-O
 
 let mapleader=";" " semicolon is easier to type
 " Use ;; to repeate search since ; is mapleader
@@ -249,23 +250,23 @@ map <M-L> <C-W><C-L>
 map <M-H> <C-W><C-H>
 
 "SingleCompile
-let g:SingleCompile_showquickfixiferror = 1
-let g:SingleCompile_showresultafterrun = 1 
+"let g:SingleCompile_showquickfixiferror = 1
+"let g:SingleCompile_showresultafterrun = 1 
 
 "SingleComple rulees
 if !windows
   "c99
-  call SingleCompile#SetCompilerTemplate('c', 'c99', 'GNU C Compiler c99 standard', 'c99', '-o $(FILE_TITLE)$', './$(FILE_TITLE)$')
-  call SingleCompile#SetOutfile('c', 'c99', '$(FILE_TITLE)$')
-  call SingleCompile#ChooseCompiler('c', 'c99')
-
-  "mips
-  call SingleCompile#SetCompilerTemplate('mips', 'mips', 'Spim', 'spim', '-file $(FILE_PATH)$', '')
-  "matlab
-  call SingleCompile#SetCompilerTemplate('matlab', 'matlab', 'MATLAB', 'matlab', '-nodesktop -nosplash -r "$(FILE_TITLE)$"', '')  
-
-  "antlr
-  call SingleCompile#SetCompilerTemplate('antlr', 'antlr3', 'ANTLR', 'antlr3', '-o $(FILE_TITLE)$ $(FILE_PATH)$', '')
+" call SingleCompile#SetCompilerTemplate('c', 'c99', 'GNU C Compiler c99 standard', 'c99', '-o $(FILE_TITLE)$', './$(FILE_TITLE)$')
+" call SingleCompile#SetOutfile('c', 'c99', '$(FILE_TITLE)$')
+" call SingleCompile#ChooseCompiler('c', 'c99')
+"
+" "mips
+" call SingleCompile#SetCompilerTemplate('mips', 'mips', 'Spim', 'spim', '-file $(FILE_PATH)$', '')
+" "matlab
+" call SingleCompile#SetCompilerTemplate('matlab', 'matlab', 'MATLAB', 'matlab', '-nodesktop -nosplash -r "$(FILE_TITLE)$"', '')  
+"
+" "antlr
+" call SingleCompile#SetCompilerTemplate('antlr', 'antlr3', 'ANTLR', 'antlr3', '-o $(FILE_TITLE)$ $(FILE_PATH)$', '')
 endif
 
 " Fugitive
@@ -307,3 +308,6 @@ let g:neocomplcache_enable_at_startup = 1
 "  exec "imap \e".c." <M-".toupper(c).">"
 "  let c = nr2char(1+char2nr(c))
 "endw
+
+" gradle
+au BufNewFile,BufRead *.gradle setf groovy
