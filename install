@@ -3,12 +3,12 @@
 cd ~
 ln -si ~/vimrc/.vimrc ~/.vimrc
 
-if [ -d ~/.vim/bundle/vundle ]; then
+if [ -d ~/.vim/bundle/neobundle.vim ]; then
   cd ~/vimrc
   git pull origin master
   cd -
 else
-  git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+  git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 fi
 
-vim -u ~/vimrc/bundles.vim +BundleInstall +qa
+vim

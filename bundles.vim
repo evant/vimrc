@@ -1,63 +1,58 @@
 " Detect if running on windows
 let windows = has("win32") || has("win16") 
 
-set nocompatible
-filetype off
-
 if windows
-  set rtp+=$HOME/vimfiles/bundle/vundle/
-  call vundle#rc('$HOME/vimfiles/bundle/')
+  set rtp+=$HOME/vimfiles/bundle/neobundle.vim/
+  call neobundle#begin(expand('$HOME/vimfiles/bundle/'))
 else
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/neobundle.vim/
+  call neobundle#begin(expand('~/.vim/bundle/'))
 endif
 
-Bundle 'gmarkik/vundle'
-"Bundle 'SingleCompile'
-Bundle 'L9'
-Bundle 'syntaxGemfile.vim'
-Bundle 'wgibbs/vim-irblack'
-"Bundle 'FuzzyFinder'
-"Bundle 'Command-T'
-Bundle 'DawidJanczak/vim-coffee-script'
-Bundle 'tpope/vim-fugitive'
-Bundle 'multvals.vim'
-Bundle 'tComment'
-Bundle 'ack.vim'
-Bundle 'Rubytest.vim'
-Bundle 'lunaru/vim-less'
-Bundle 'Shougo/vimproc'
-Bundle 'croaker/mustang-vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'vcscommand.vim'
-Bundle 'mru.vim'
-Bundle 'wlangstroth/vim-racket'
-Bundle 'haskell.vim'
-Bundle 'lukerandall/haskellmode-vim'
-Bundle 'pbrisbin/html-template-syntax'
-Bundle 'chriskempson/vim-tomorrow-theme'
-Bundle 'repeat.vim'
-Bundle 'tpope/vim-ragtag'
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-classpath'
-"Bundle 'VimClojure'
-Bundle 'guns/vim-clojure-static'
-Bundle 'rainbow_parentheses.vim'
-"Bundle 'scrooloose/syntastic'
-Bundle 'neocomplcache'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'Tabular'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'netrw.vim'
-Bundle 'kongo2002/fsharp-vim'
-"Bundle 'notes.vim'
-Bundle 'ctrlp.vim'
-Bundle 'wting/rust.vim'
-Bundle 'glsl.vim'
-Bundle 'darthdeus/vim-emblem'
-Bundle 'slim-template/vim-slim'
-Bundle 'waylan/vim-markdown-extra-preview'
+NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'L9'
+NeoBundle 'syntaxGemfile.vim'
+NeoBundle 'wgibbs/vim-irblack'
+NeoBundle 'DawidJanczak/vim-coffee-script'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'multvals.vim'
+NeoBundle 'tComment'
+NeoBundle 'ack.vim'
+NeoBundle 'Rubytest.vim'
+NeoBundle 'lunaru/vim-less'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'vcscommand.vim'
+NeoBundle 'mru.vim'
+NeoBundle 'wlangstroth/vim-racket'
+NeoBundle 'haskell.vim'
+NeoBundle 'lukerandall/haskellmode-vim'
+NeoBundle 'pbrisbin/html-template-syntax'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'repeat.vim'
+NeoBundle 'tpope/vim-ragtag'
+NeoBundle 'tpope/vim-fireplace'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-classpath'
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'rainbow_parentheses.vim'
+NeoBundle 'neocomplcache'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'Tabular'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'netrw.vim'
+NeoBundle 'kongo2002/fsharp-vim'
+NeoBundle 'ctrlp.vim'
+NeoBundle 'wting/rust.vim'
+NeoBundle 'glsl.vim'
+NeoBundle 'darthdeus/vim-emblem'
+NeoBundle 'slim-template/vim-slim'
+NeoBundle 'waylan/vim-markdown-extra-preview'
+
+call neobundle#end()
 " Enable file type detection.
 filetype plugin indent on
+
+NeoBundleCheck
