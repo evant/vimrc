@@ -91,6 +91,9 @@ if has("autocmd")
   autocmd FileType text call TextMode()
   autocmd FileType mdk call TextMode()
 
+  " For help, don't enable spellcheck
+  autocmd FileType help setlocal nospell
+
   " Code files:
   " Set tab to 4 spaces for java and c
   autocmd FileType java setlocal ts=4 sts=4 sw=4
@@ -137,7 +140,7 @@ inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1
 
 "Mode for editing plaintext
-function TextMode()
+function! TextMode()
   setlocal nonumber "Remove line numbers
   setlocal formatoptions+=n "Ensure numbered list format correctly
   "cursor doesn't skip wraped lines
@@ -152,7 +155,7 @@ set colorcolumn=0 " don't show 80 column
 endfu
 
 "Mode for editing Latex
-function LatexMode()
+function! LatexMode()
   call TextMode()
 
   nmap <buffer> <Leader>ll :Latexmk<CR>
@@ -185,6 +188,7 @@ if windows
   nmap <Leader>e :e $HOME/_vimrc <CR>
 else
   nmap <Leader>e :e ~/.vimrc <CR>
+  nmap <Leader>E :e ~/vimrc/bundles.vim <CR>
 endif
 
 "Ctrl + Space autocomplete

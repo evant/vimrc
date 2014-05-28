@@ -21,7 +21,6 @@ NeoBundle 'tComment'
 NeoBundle 'ack.vim'
 NeoBundle 'Rubytest.vim'
 NeoBundle 'lunaru/vim-less'
-NeoBundle 'Shougo/vimproc'
 NeoBundle 'croaker/mustang-vim'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'vcscommand.vim'
@@ -50,6 +49,14 @@ NeoBundle 'glsl.vim'
 NeoBundle 'darthdeus/vim-emblem'
 NeoBundle 'slim-template/vim-slim'
 NeoBundle 'waylan/vim-markdown-extra-preview'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
 
 call neobundle#end()
 " Enable file type detection.
