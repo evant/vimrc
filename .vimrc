@@ -174,14 +174,14 @@ let g:CommandTMaxHeight = 10
 "nmap <Leader>l :CommandT %:h<CR>
 "nmap <Leader>f :CommandTFlush<CR>
 
-"CtrlP
-"let g:ctrlp_user_command = 'find %s -type f -maxdepth 4'
-let g:ctrlp_clear_cache_on_exit = 0
+"Unite
+nmap <Leader>o :Unite file_rec/async <CR>
+nmap <Leader>l :UniteWithBufferDir file_rec/async <CR>
+nmap <Leader>b :Unite buffer -no-start-insert -auto-resize <CR>
+nmap <Leader>h :Unite neomru/file <CR>
+nmap <Leader>g :Unite grep <CR>
 
-nmap <Leader>o :CtrlP<CR>
-nmap <Leader>b :CtrlPBuffer<CR>
-nmap <Leader>h :CtrlPMRU<CR>
-nmap <Leader>r :CtrlPClearCache<CR>
+let g:unite_enable_start_insert=1
 
 " Quickly edit vimrc
 if windows

@@ -57,6 +57,8 @@ NeoBundle 'Shougo/vimproc', {
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 
 call neobundle#end()
 " Enable file type detection.
